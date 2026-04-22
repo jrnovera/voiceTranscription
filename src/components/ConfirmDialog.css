@@ -1,0 +1,88 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(4px);
+}
+
+.dialog {
+  background: #1a1a2e;
+  border: 1px solid #4c1d95;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 480px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: pop-in 0.2s ease;
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.dialog h2 {
+  font-size: 1.3rem;
+  color: #a78bfa;
+  margin-bottom: 1rem;
+}
+
+.dialog-note {
+  background: #13132a;
+  border-left: 3px solid #7c3aed;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.dialog-text {
+  font-size: 1rem;
+  color: #d4d4f0;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+.dialog-date {
+  font-size: 0.78rem;
+  color: #666;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.btn-confirm {
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  padding: 0.55rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+
+.btn-confirm:hover {
+  background: #6d28d9;
+}
+
+.btn-discard {
+  background: transparent;
+  color: #f87171;
+  border: 1px solid #f87171;
+  padding: 0.55rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+
+.btn-discard:hover {
+  background: rgba(248, 113, 113, 0.1);
+}

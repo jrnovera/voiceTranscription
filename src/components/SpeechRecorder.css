@@ -1,0 +1,125 @@
+.recorder {
+  background: #1a1a2e;
+  border: 1px solid #2e2e4e;
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.recorder.unsupported {
+  color: #f87171;
+  font-size: 0.95rem;
+}
+
+.mic-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.mic-area.listening .mic-btn {
+  box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.7);
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.7); }
+  70% { box-shadow: 0 0 0 18px rgba(167, 139, 250, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(167, 139, 250, 0); }
+}
+
+.mic-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: none;
+  background: #a78bfa;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mic-btn:hover {
+  background: #7c3aed;
+  transform: scale(1.05);
+}
+
+.mic-btn.active {
+  background: #ef4444;
+}
+
+.mic-btn.active:hover {
+  background: #b91c1c;
+}
+
+.mic-label {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.transcript-box {
+  margin-top: 1.5rem;
+  background: #13132a;
+  border: 1px solid #3b3b6e;
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: left;
+}
+
+.transcript-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #d4d4f0;
+  margin-bottom: 1rem;
+}
+
+.final-text {
+  color: #d4d4f0;
+}
+
+.interim-text {
+  color: #888;
+  font-style: italic;
+}
+
+.transcript-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.btn-save {
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.btn-save:hover {
+  background: #6d28d9;
+}
+
+.btn-clear {
+  background: transparent;
+  color: #888;
+  border: 1px solid #444;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-clear:hover {
+  border-color: #888;
+  color: #ccc;
+}

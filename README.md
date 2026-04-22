@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Voice Transcription — Fast & Accurate Speech to Text
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

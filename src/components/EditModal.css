@@ -1,0 +1,47 @@
+.edit-modal {
+  background: #1a1a2e;
+  border: 1px solid #4c1d95;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 520px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: pop-in 0.2s ease;
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.edit-modal h2 {
+  font-size: 1.3rem;
+  color: #a78bfa;
+  margin-bottom: 1rem;
+}
+
+.edit-textarea {
+  width: 100%;
+  background: #13132a;
+  border: 1px solid #3b3b6e;
+  border-radius: 10px;
+  color: #d4d4f0;
+  font-size: 0.97rem;
+  line-height: 1.6;
+  padding: 0.9rem 1rem;
+  resize: vertical;
+  font-family: inherit;
+  margin-bottom: 1.25rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.edit-textarea:focus {
+  border-color: #7c3aed;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
