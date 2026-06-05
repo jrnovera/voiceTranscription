@@ -75,3 +75,24 @@ export function searchNotes(notes, queryStr) {
       (n.text || '').toLowerCase().includes(lower)
   );
 }
+
+export async function summarizeText(text) {
+  // Simulate AI Processing Delay
+  await new Promise(resolve => setTimeout(resolve, 1500));
+  
+  if (!text || text.trim().length === 0) return "No text to summarize.";
+  
+  const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+  
+  // Mock summary: Take first, middle, and last sentence, using a Set to prevent duplicates on short texts
+  const summaryParts = [
+    sentences[0]?.trim(),
+    sentences[Math.floor(sentences.length / 2)]?.trim(),
+    sentences[sentences.length - 1]?.trim()
+  ].filter(Boolean);
+  
+  const summary = [...new Set(summaryParts)].join(' ');
+  
+  return summary;
+}
+

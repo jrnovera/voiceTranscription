@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { LayoutDashboard, FileText, Mic, User, Shield } from 'lucide-react';
 import './Navbar.css';
 
 export default function Navbar() {
@@ -12,6 +13,7 @@ export default function Navbar() {
   if (!currentUser) return null;
 
   const handleLogout = async () => {
+    if (!window.confirm('Are you sure you want to sign out?')) return;
     try {
       await logout();
       navigate('/');
@@ -21,22 +23,22 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { to: '/dashboard', label: 'Dashboard', icon: '📊' },
-    { to: '/notes', label: 'Notes', icon: '📝' },
-    { to: '/record', label: 'Record', icon: '🎙️' },
-    { to: '/profile', label: 'Profile', icon: '👤' },
+    { to: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
+    { to: '/notes', label: 'Notes', icon: <FileText size={20} /> },
+    { to: '/record', label: 'Record', icon: <Mic size={20} /> },
+    { to: '/profile', label: 'Profile', icon: <User size={20} /> },
   ];
 
   if (userRole === 'admin') {
-    navLinks.push({ to: '/admin', label: 'Admin', icon: '🛡️' });
+    navLinks.push({ to: '/admin', label: 'Admin', icon: <Shield size={20} /> });
   }
 
   return (
     <nav className="navbar">
       <div className="navbar-inner">
         <Link to="/dashboard" className="navbar-brand">
-          <span className="brand-icon">🎙️</span>
-          <span className="brand-text">Voice Transcription</span>
+          <span className="brand-icon"><Mic size={24} /></span>
+          <span className="brand-text">VoiceNotes</span>
         </Link>
 
         <button

@@ -27,6 +27,7 @@ export default function Profile() {
   }
 
   async function handleLogout() {
+    if (!window.confirm('Are you sure you want to sign out?')) return;
     try {
       await logout();
       navigate('/');

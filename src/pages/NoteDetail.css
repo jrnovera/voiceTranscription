@@ -97,6 +97,30 @@
   word-break: break-word;
 }
 
+.note-summary-card {
+  background: rgba(167, 139, 250, 0.05);
+  border-left: 3px solid var(--accent);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.note-summary-card h4 {
+  font-size: 0.9rem;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+
+.note-summary-card p {
+  color: var(--text-primary);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
 
 
 /* Edit form */

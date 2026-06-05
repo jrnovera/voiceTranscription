@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { getUserNotes, searchNotes } from '../services/noteService';
 import DOMPurify from 'dompurify';
+import { Mic, FileText, Calendar, MessageSquare, Search } from 'lucide-react';
 import './Dashboard.css';
 
 export default function Dashboard() {
@@ -50,28 +51,28 @@ export default function Dashboard() {
           <h1>{greeting()}, {currentUser.displayName || 'there'}! 👋</h1>
           <p className="dash-subtitle">Here's your notes overview</p>
         </div>
-        <Link to="/record" className="btn-record-fab">
-          <span>🎙️</span> New Recording
+        <Link to="/record" className="btn-record-fab" style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+          <Mic size={18}/> New Recording
         </Link>
       </div>
 
       <div className="stats-grid">
         <div className="stat-card">
-          <div className="stat-icon">📝</div>
+          <div className="stat-icon"><FileText size={24}/></div>
           <div className="stat-info">
             <span className="stat-value">{notes.length}</span>
             <span className="stat-label">Total Notes</span>
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-icon">📅</div>
+          <div className="stat-icon"><Calendar size={24}/></div>
           <div className="stat-info">
             <span className="stat-value">{thisWeek}</span>
             <span className="stat-label">This Week</span>
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-icon">💬</div>
+          <div className="stat-icon"><MessageSquare size={24}/></div>
           <div className="stat-info">
             <span className="stat-value">{totalWords.toLocaleString()}</span>
             <span className="stat-label">Total Words</span>
@@ -80,7 +81,7 @@ export default function Dashboard() {
       </div>
 
       <div className="dash-search">
-        <span className="search-icon">🔍</span>
+        <span className="search-icon"><Search size={20}/></span>
         <input
           type="text"
           placeholder="Search your notes..."
@@ -103,7 +104,7 @@ export default function Dashboard() {
           </div>
         ) : recentNotes.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-icon">🎙️</div>
+            <div className="empty-icon"><Mic size={48} opacity={0.5}/></div>
             <h3>No notes yet</h3>
             <p>Record your first voice note to get started!</p>
             <Link to="/record" className="btn-primary">Start Recording</Link>

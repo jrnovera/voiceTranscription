@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { Mic, Search, Shield, Copy, Zap } from 'lucide-react';
 import './Landing.css';
 
 export default function Landing() {
@@ -8,27 +9,27 @@ export default function Landing() {
 
   const features = [
     {
-      icon: '🎙️',
+      icon: <Mic size={32} />,
       title: 'Voice-to-Text',
       desc: 'Record your thoughts instantly with real-time speech recognition. No typing needed.'
     },
     {
-      icon: '🔍',
+      icon: <Search size={32} />,
       title: 'Smart Search',
       desc: 'Find any note in seconds with powerful full-text search across all your content.'
     },
     {
-      icon: '🔒',
+      icon: <Shield size={32} />,
       title: 'Secure & Private',
       desc: 'Your notes are encrypted and stored securely with Firebase. Only you can access them.'
     },
     {
-      icon: '📋',
+      icon: <Copy size={32} />,
       title: 'Copy & Download',
       desc: 'Export your notes anytime — copy to clipboard or download as text files with one click.'
     },
     {
-      icon: '⚡',
+      icon: <Zap size={32} />,
       title: 'Lightning Fast',
       desc: 'Built for speed with real-time sync. Your notes are always up to date across devices.'
     }
@@ -41,7 +42,7 @@ export default function Landing() {
 
       <header className="landing-header">
         <Link to="/" className="landing-brand">
-          <span className="landing-brand-icon">🎙️</span>
+          <span className="landing-brand-icon" style={{ display: 'flex', alignItems: 'center' }}><Mic size={28} /></span>
           <span>Voice Transcription</span>
         </Link>
         <div className="landing-header-actions">
@@ -57,7 +58,7 @@ export default function Landing() {
       </header>
 
       <section className="hero">
-        <div className="hero-badge">✨ Instant Transcription</div>
+        <div className="hero-badge"><Zap size={14} style={{marginRight: '6px'}}/> Instant Transcription</div>
         <h1 className="hero-title">
           Your Voice.<br />
           <span className="gradient-text">Your Notes.</span><br />

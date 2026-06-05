@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { Mic } from 'lucide-react';
 import './Login.css';
 
 export default function ForgotPassword() {
@@ -38,7 +39,7 @@ export default function ForgotPassword() {
       <div className="auth-container">
         <div className="auth-card">
           <div className="auth-header">
-            <Link to="/" className="auth-brand">🎙️ SpeechNotes</Link>
+            <Link to="/" className="auth-brand"><Mic className="brand-icon" size={24} style={{marginRight: '8px'}} /> VoiceNotes</Link>
             <h1>Reset password</h1>
             <p>Enter your email and we'll send you a reset link</p>
           </div>

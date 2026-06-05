@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getNoteById, updateNote, deleteNote } from '../services/noteService';
+import { getNoteById, updateNote, deleteNote, summarizeText } from '../services/noteService';
 import DOMPurify from 'dompurify';
+import { ArrowLeft, Edit2, Sparkles, Copy, Download, Trash2, Check } from 'lucide-react';
 import './NoteDetail.css';
 
 export default function NoteDetail() {
@@ -14,6 +15,7 @@ export default function NoteDetail() {
   const [editText, setEditText] = useState('');
   const [copied, setCopied] = useState(false);
   const [saveLoading, setSaveLoading] = useState(false);
+  const [summarizing, setSummarizing] = useState(false);
 
   useEffect(() => {
     async function fetchNote() {
@@ -48,6 +50,20 @@ export default function NoteDetail() {
       console.error('Error saving note:', err);
     } finally {
       setSaveLoading(false);
+    }
+  }
+
+  async function handleSummarize() {
+    try {
+      setSummarizing(true);
+      const generatedSummary = await summarizeText(note.text);
+      await updateNote(id, { summary: generatedSummary });
+      setNote((prev) => ({ ...prev, summary: generatedSummary }));
+    } catch (err) {
+      console.error('Error generating summary:', err);
+      alert('Failed to summarize note.');
+    } finally {
+      setSummarizing(false);
     }
   }
 
@@ -98,23 +114,26 @@ export default function NoteDetail() {
   return (
     <div className="note-detail">
       <div className="note-detail-header">
-        <button className="btn-back" onClick={() => navigate('/notes')}>
-          ← Back to Notes
+        <button className="btn-back" onClick={() => navigate('/notes')} style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
+          <ArrowLeft size={16} /> Back to Notes
         </button>
         <div className="note-detail-actions">
           {!editing && (
             <>
-              <button className="btn-action" onClick={() => setEditing(true)} title="Edit">
-                ✏️ Edit
+              <button className="btn-action" onClick={() => setEditing(true)} title="Edit" style={{display: 'flex', alignItems: 'center', gap: '6px'}}>
+                <Edit2 size={16} /> Edit
               </button>
-              <button className="btn-action" onClick={handleCopy} title="Copy">
-                {copied ? '✅ Copied!' : '📋 Copy'}
+              <button className="btn-action" onClick={handleSummarize} title="Summarize Note" disabled={summarizing} style={{display: 'flex', alignItems: 'center', gap: '6px'}}>
+                {summarizing ? '⏳ Summarizing...' : <><Sparkles size={16} /> Summarize</>}
               </button>
-              <button className="btn-action" onClick={handleDownload} title="Download">
-                ⬇️ Download
+              <button className="btn-action" onClick={handleCopy} title="Copy" style={{display: 'flex', alignItems: 'center', gap: '6px'}}>
+                {copied ? <><Check size={16} /> Copied!</> : <><Copy size={16} /> Copy</>}
               </button>
-              <button className="btn-action btn-danger" onClick={handleDelete} title="Delete">
-                🗑️ Delete
+              <button className="btn-action" onClick={handleDownload} title="Download" style={{display: 'flex', alignItems: 'center', gap: '6px'}}>
+                <Download size={16} /> Download
+              </button>
+              <button className="btn-action btn-danger" onClick={handleDelete} title="Delete" style={{display: 'flex', alignItems: 'center', gap: '6px'}}>
+                <Trash2 size={16} /> Delete
               </button>
             </>
           )}
@@ -168,6 +187,13 @@ export default function NoteDetail() {
               <span>•</span>
               <span>{(note.text || '').split(/\s+/).filter(Boolean).length} words</span>
             </div>
+
+            {note.summary && (
+              <div className="note-summary-card">
+                <h4 style={{display: 'flex', alignItems: 'center', gap: '6px'}}><Sparkles size={16} /> AI Summary</h4>
+                <p>{DOMPurify.sanitize(note.summary)}</p>
+              </div>
+            )}
 
             <div className="note-detail-body">
               <p>{DOMPurify.sanitize(note.text)}</p>

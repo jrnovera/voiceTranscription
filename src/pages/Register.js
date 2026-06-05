@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { Mic } from 'lucide-react';
 import './Login.css';
 
 export default function Register() {
@@ -18,8 +19,9 @@ export default function Register() {
     if (!name.trim() || !email.trim() || !password.trim()) {
       return setError('Please fill in all fields.');
     }
-    if (password.length < 6) {
-      return setError('Password must be at least 6 characters.');
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])(?!.*\s).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      return setError('Password must be at least 8 characters, include an uppercase letter, a lowercase letter, a number, a special character, and no spaces.');
     }
     if (password !== confirmPassword) {
       return setError('Passwords do not match.');
@@ -42,13 +44,15 @@ export default function Register() {
     }
   }
 
-  async function handleGoogle() {
+  async function handleGoogle(e) {
+    if (e) e.preventDefault();
     try {
       setError('');
       setLoading(true);
       await loginWithGoogle();
       navigate('/dashboard');
     } catch (err) {
+      console.error('Google sign-up failed:', err);
       setError('Google sign-up failed. Please try again.');
     } finally {
       setLoading(false);
@@ -61,7 +65,7 @@ export default function Register() {
       <div className="auth-container">
         <div className="auth-card">
           <div className="auth-header">
-            <Link to="/" className="auth-brand">🎙️ SpeechNotes</Link>
+            <Link to="/" className="auth-brand"><Mic className="brand-icon" size={24} style={{marginRight: '8px'}} /> VoiceNotes</Link>
             <h1>Create your account</h1>
             <p>Start capturing your thoughts with voice</p>
           </div>
@@ -97,7 +101,7 @@ export default function Register() {
               <input
                 id="reg-password"
                 type="password"
-                placeholder="At least 6 characters"
+                placeholder="At least 8 chars"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="new-password"
@@ -123,7 +127,7 @@ export default function Register() {
             <span>or</span>
           </div>
 
-          <button className="btn-google" onClick={handleGoogle} disabled={loading}>
+          <button type="button" className="btn-google" onClick={handleGoogle} disabled={loading}>
             <svg viewBox="0 0 24 24" width="20" height="20">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
               <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />

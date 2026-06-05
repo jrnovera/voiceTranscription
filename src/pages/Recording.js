@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { addNote } from '../services/noteService';
 import DOMPurify from 'dompurify';
+import { Mic, Square, Tag, Save, AlertTriangle } from 'lucide-react';
 import './Recording.css';
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -138,7 +139,7 @@ export default function Recording() {
     return (
       <div className="recording-page">
         <div className="unsupported-msg">
-          <div className="unsupported-icon">⚠️</div>
+          <div className="unsupported-icon"><AlertTriangle size={36} /></div>
           <h2>Browser Not Supported</h2>
           <p>Speech Recognition requires Chrome or Edge. Please switch browsers.</p>
         </div>
@@ -155,8 +156,8 @@ export default function Recording() {
 
       <div className="recording-card">
         <div className="title-input-area">
-          <label htmlFor="recording-title" className="input-label">
-            <span>🏷️</span> Title of this recording
+          <label htmlFor="recording-title" className="input-label" style={{display: 'flex', alignItems: 'center', gap: '6px'}}>
+            <Tag size={16} /> Title of this recording
           </label>
           <input
             type="text"
@@ -180,8 +181,9 @@ export default function Recording() {
             onClick={isListening ? stopRecognition : startListening}
             title={isListening ? 'Stop recording' : 'Start recording'}
             id="mic-button"
+            style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}
           >
-            {isListening ? '⏹' : '🎙️'}
+            {isListening ? <Square size={32} /> : <Mic size={32} />}
           </button>
           <span className="mic-status">
             {isListening ? (
@@ -214,8 +216,9 @@ export default function Recording() {
             className="btn-primary btn-lg"
             onClick={handleSave}
             disabled={saving || !displayText}
+            style={{display: 'flex', alignItems: 'center', gap: '8px'}}
           >
-            {saving ? '💾 Saving...' : '💾 Save Note'}
+            {saving ? 'Saving...' : <><Save size={18} /> Save Note</>}
           </button>
           <button
             className="btn-outline"

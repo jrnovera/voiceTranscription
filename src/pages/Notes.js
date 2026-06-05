@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { getUserNotes, searchNotes, deleteNote } from '../services/noteService';
 import DOMPurify from 'dompurify';
+import { Mic, Search, FileText, Copy, Download, Trash2 } from 'lucide-react';
 import './Notes.css';
 
 export default function Notes() {
@@ -50,14 +51,14 @@ export default function Notes() {
     <div className="notes-page">
       <div className="notes-page-header">
         <h1>Your Notes</h1>
-        <Link to="/record" className="btn-primary">
-          🎙️ New Recording
+        <Link to="/record" className="btn-primary" style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+          <Mic size={18} /> New Recording
         </Link>
       </div>
 
       <div className="notes-toolbar">
         <div className="notes-search">
-          <span className="search-icon">🔍</span>
+          <span className="search-icon"><Search size={20} /></span>
           <input
             type="text"
             placeholder="Search notes..."
@@ -90,7 +91,7 @@ export default function Notes() {
         </div>
       ) : sorted.length === 0 ? (
         <div className="empty-state">
-          <div className="empty-icon">📝</div>
+          <div className="empty-icon"><FileText size={48} opacity={0.5} /></div>
           <h3>{searchQuery ? 'No notes found' : 'No notes yet'}</h3>
           <p>{searchQuery ? 'Try a different search term.' : 'Record your first voice note!'}</p>
           {!searchQuery && <Link to="/record" className="btn-primary">Start Recording</Link>}
@@ -121,10 +122,44 @@ export default function Notes() {
               </Link>
               <button
                 className="note-list-delete"
-                onClick={() => handleDelete(note.id)}
-                title="Delete note"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const content = `${note.title}\n\n${note.text}`;
+                  navigator.clipboard.writeText(content).then(() => {
+                    // Optional tiny UX: user knows it copied, alert is simple
+                    alert('Copied to clipboard!');
+                  });
+                }}
+                title="Copy note"
+                style={{ borderRadius: 0, padding: '0 12px', display: 'flex', alignItems: 'center' }}
               >
-                🗑️
+                <Copy size={16} />
+              </button>
+              <button
+                className="note-list-delete"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const content = `${note.title}\n${'='.repeat((note.title || 'Note').length)}\n\n${note.text}\n\nCreated: ${note.createdAt instanceof Date ? note.createdAt.toLocaleString() : 'Unknown'}`;
+                  const blob = new Blob([content], { type: 'text/plain' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `${(note.title || 'note').replace(/[^a-zA-Z0-9]/g, '_')}.txt`;
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }}
+                title="Download note"
+                style={{ borderRadius: 0, padding: '0 12px', display: 'flex', alignItems: 'center' }}
+              >
+                <Download size={16} />
+              </button>
+              <button
+                className="note-list-delete"
+                onClick={(e) => { e.preventDefault(); handleDelete(note.id); }}
+                title="Delete note"
+                style={{ padding: '0 12px', display: 'flex', alignItems: 'center' }}
+              >
+                <Trash2 size={16} />
               </button>
             </div>
           ))}
